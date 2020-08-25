@@ -29,8 +29,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 public class bomb extends ApplicationWindow {
-	private Action action;
-	private Action action_1;
+	private Action action_restart;
+	private Action action_setting;
 	
 	int length = 20;
 	double diff = 0.1;
@@ -128,7 +128,7 @@ public class bomb extends ApplicationWindow {
 					    		
 								final Shell windialog = new Shell(getShell(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 							    windialog.setText("Congratulation!");
-							    windialog.setSize(220, 130);
+							    windialog.setSize(240, 150);
 							    windialog.setLocation(402, 319);
 								
 							    Button winDialogbtnOK = new Button(windialog, SWT.PUSH);
@@ -202,7 +202,7 @@ public class bomb extends ApplicationWindow {
 				Image BombImage = new Image(Display.getCurrent(),".\\pics\\未命名-4.png");
 				Image SuspendImage = new Image(Display.getCurrent(),".\\pics\\未命名-5.png");
 				
-				Font font=new Font(arg0.display, "Arial", 16, 16);
+				Font font=new Font(arg0.display, "Arial", 10, 10);
 				BufferImageGC.setFont(font);
 				
 				for(int i=0;i<length;i++)
@@ -291,26 +291,26 @@ public class bomb extends ApplicationWindow {
 	private void createActions() {
 		// Create the actions
 		{
-			action = new Action("重新开始") {
+			action_restart = new Action("重新开始") {
 				public void run() {
 					BombInit();
 				}
 			};
 		}
 		{
-			action_1 = new Action("设置") {
+			action_setting = new Action("设置") {
 				public void run() {
 					
 					final Shell paramdialog = new Shell(getShell(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 					final Button parambtnSubmit = new Button(paramdialog, SWT.NONE);
 					final Button parambtnCancel = new Button(paramdialog, SWT.NONE);
 					
-					paramdialog.setSize(215, 154);
+					paramdialog.setSize(280, 170);
 					paramdialog.setLocation(399, 297);
 					paramdialog.setText("设置");
 					
 					Label paramLabel1 = new Label(paramdialog, SWT.NONE);
-					paramLabel1.setBounds(30, 25, 60, 15);
+					paramLabel1.setBounds(30, 15, 80, 20);
 					paramLabel1.setText("大小(5-30)");						
 					
 					final Text paramlengthinput = new Text(paramdialog, SWT.BORDER);
@@ -328,18 +328,18 @@ public class bomb extends ApplicationWindow {
 								parambtnSubmit.forceFocus();
 						}
 					});
-					paramlengthinput.setBounds(112, 22, 70, 18);
+					paramlengthinput.setBounds(112, 15, 70, 20);
 					paramlengthinput.setText(length+"");
 										
 					Label paramLabel2 = new Label(paramdialog, SWT.NONE);
-					paramLabel2.setBounds(30, 52, 30, 15);
+					paramLabel2.setBounds(30, 52, 30, 20);
 					paramLabel2.setText("难度");
 					
 					Button[] paramBtndiffinput = new Button[3];
 					for(int i=0;i<3;i++) 
 					{
 						paramBtndiffinput[i]=new Button(paramdialog,SWT.RADIO);
-						paramBtndiffinput[i].setBounds(65+40*i, 50, 40, 15);
+						paramBtndiffinput[i].setBounds(70+60*i, 52, 50, 20);
 					}
 					paramBtndiffinput[0].setText("简单");
 					paramBtndiffinput[1].setText("中等");
@@ -367,7 +367,7 @@ public class bomb extends ApplicationWindow {
 					}
 					
 					parambtnSubmit.setText("确定");
-					parambtnSubmit.setBounds(38, 76, 72, 22);
+					parambtnSubmit.setBounds(30, 85, 72, 22);
 					parambtnSubmit.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
@@ -377,7 +377,7 @@ public class bomb extends ApplicationWindow {
 						}
 					});
 					
-					parambtnCancel.setBounds(112, 76, 72, 22);
+					parambtnCancel.setBounds(120, 85, 72, 22);
 					parambtnCancel.setText("取消");				
 					parambtnCancel.addSelectionListener(new SelectionAdapter() {
 						@Override
@@ -399,12 +399,12 @@ public class bomb extends ApplicationWindow {
 	 */
 	@Override
 	protected MenuManager createMenuManager() {
-		MenuManager menuManager = new MenuManager("menu");
-		MenuManager menuManager_1 = new MenuManager("选项...");
-		menuManager.add(menuManager_1);
-		menuManager_1.add(action);
-		menuManager_1.add(action_1);
-		return menuManager;
+		MenuManager menuManager_main = new MenuManager("menu");
+		MenuManager menuManager_sub = new MenuManager("选项...");
+		menuManager_main.add(menuManager_sub);
+		menuManager_sub.add(action_restart);
+		menuManager_sub.add(action_setting);
+		return menuManager_main;
 	}
 
 	/**
